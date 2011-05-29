@@ -317,7 +317,7 @@ class Img {
 		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em> | <em>square</em>)<br/>default value: 100x100 | 100',
 		'bg'    => 'background: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 63,63,63,100 | de',
 		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
-		'br'     => 'border-radius: 0-50 % for rounded corners. DOES NOT work with opacity on bg at the moment.',
+		'br'     => 'border-radius: 0-50 % of shortest side',
 		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
 		'debug' => 'enable debugging (1 | 0)<br/>default value: 0' 
 	);
