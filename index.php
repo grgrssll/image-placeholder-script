@@ -323,85 +323,19 @@ class Img {
 	);
 
 	private function help(){
-		
+		header('Content-type: text/html');
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https' : 'http';
 		$base = $protocol.'://'.$_SERVER['SERVER_NAME'].str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
-
-		$html = '<!DOCTYPE html><html lang="en"><head><title>grgr.us | placeholder image creator</title><meta charset="utf-8"><meta name="keywords" content=""><meta name="description" content=""><link rel="shortcut icon" href="?d=16&bg=de&t=gr&c=g&f=2"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<style>
-html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,time, mark, audio, vide {margin: 0;padding: 0;border: 0;outline: 0;text-decoration: none;font-style: normal;font-weight: normal;font-size: 100%;vertical-align: baseline;background: transparent;font-family:Helvetica, Arial, sans-serif;
-color:#222;}
-input,select{font-family:Helvetica, Arial, sans-serif;}
-body, html{width:100%;height:100%;background:#fcfcfc;}
-article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary { 
-display:block;}
-nav ul{list-style:none;}
-body {line-height: 1; font-size: 10px; font-family: Helvetica,Arial,sans-serif;}
-ol,ul {list-style: none;}
-blockquote,q {quotes: none;}
-blockquote:before,blockquote:after,q:before,q:after {content: ""; content: none;}
-input:focus {outline: 1px #f20 solid;background-color: #ddd;border:0;}
-#info input:focus{outline:0;background:#fff;}
-ins {text-decoration: none; background-color: yellow;}
-del {text-decoration: line-through;}
-table {border-collapse: collapse; border-spacing: 0;}
-a,a:link,a:visited,a:hover,a:active,a:focus{cursor:pointer;text-decoration:none;color:#06f;}
-#wrapper{margin: 0 auto;position:relative;width:960px;padding:20px;}
-#nav{border-bottom:1px #777 solid;padding-bottom:14px;}
-#nav ul{overflow:hidden;margin-top:10px;}
-#nav li{float:left;}
-#nav li a{display:block;padding:4px 8px;font-size:14px;color:#777;}
-#nav li a:hover{background:#ddd;}
-#nav li a.selected{color:#06f;}
-#nav h1{color:#666;font-size:22px;}
-#nav h1 span{font-size:14px;color:#777;}
-#nav h1 span a{font-size:14px;color:#06f;}
-.page{margin:20px 0;display:none;overflow:hidden;}
-#page_tool{display:block;}
-.page li,table{color:#777;font-family:droid sans mono, monospace;font-size:14px;border:1px #ddd solid;padding:4px;margin-bottom:20px;width:960px;}
-.page li{margin-bottom:10px;width:950px;}
-.page li img{margin-top:4px;}
-td{color:#777;padding:4px 20px 4px 8px;vertical-align:top;}
-td.t-key,th.t-key{color:#444;font-weight:bold;width:100px;}
-th.t-key,th{background:#444;color:#fff;padding:4px 20px 4px 8px;font-weight:bold;text-align:left;}
-td.t-key td.t-key{color:#666; font-weight:bold;}
-td strong{color:#444;font-weight:bold;}
-td em{color:#444;font-style:italic;}
-td table{background:#eee;width:auto;margin-bottom:0;}
-tr:nth-child(2n-1) td{background:#f5f5f5;}
-.page h2{color:#777;font-size:18px;font-weight:bold;margin-bottom:14px;}
-.page p{color:#777;font-size:14px;margin:10px 0;}
-strong{color:inherit;font-weight:bold;}
-#footer{position:absolute;bottom:0;right:10px;font-size:12px;margin:0;}
-#footer,#footer a{color:#777;}
-#footer a:hover{color:#0d0;}
-.element{overflow:hidden;margin-bottom:10px;padding:1px 0;}
-.element label{width:60px;display:block;color:#777;font-size:12px;float:left;margin-top:6px;}
-.element.g-col label{clear:left;}
-#link,.element select,.element input{display:block;color:#777;font-size:14px;font-family:droid sans mono, monospace;float:left;border:1px #ccc solid;padding:4px;margin-right:20px;margin-bottom:4px;}
-.element select{padding:2px;width:60px;}
-.element.g-dim input{width:60px;}
-.element.g-col input{width:200px;margin-right:10px;}
-#link,.element.g-copy input{width:446px;margin-right:0;}
-#link{width:950px;height:16px;float:none;margin-bottom:14px;}
-p.hint{font-size:12px;color:#777;float:left;margin:3px 0 0 8px;}
-.submit input{border:1px #bbb solid;color:#555;text-shadow:#eee 1px 1px 1px;font-family:helvetica, arial, sans-serif;font-size:14px;display:block;-border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;cursor:pointer;padding:4px 8px 2px 8px;background:#ccc;background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));background: -moz-linear-gradient(top,  #eee,  #ccc); }
-.submit input:hover{color:#111;background:#777;background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#eee));background: -moz-linear-gradient(top,  #ccc,  #eee); }
-h3{font-size:16px;color:#999;font-weight:bold;margin-bottom:10px;}
-.group{border:1px #e7e7e7 solid;background:#f7f7f7;float:left;padding:10px;height:255px;margin-left:20px;margin-bottom:16px;}
-.result{clear:both;}
-#first_group{width:380px;margin-left:0;}
-#second_group{width:516px;}
-p.value{font-size:12px;float:left;color:#777;width:60px;text-align:right;position:relative;top:-2px;}
-p.value.red{color:#f20;}
-p.value.green{color:#0b0;}
-p.value.blue{color:#05d;}
-::selection {color:#0d0;}
-.element.g-rad label{ width:95px;}
-.element.g-rad input{ width:155px;}
-.element.g-rad{margin-bottom:8px;}
-.element.g-dim{margin-bottom:7px;}
-</style>
+		?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>grgr.us | placeholder image creator</title>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="?d=16&bg=de&t=gr&c=g&f=2">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script>
 function Builder(){
 	var t = this;
@@ -414,7 +348,7 @@ function Builder(){
 		"br" : 0
 	};
 	this.URL = {
-		"base" : "'.$base.'",
+		"base" : "<?php echo $base;?>",
 		"set" : function(){
 			t.params.d    = t.validate("dim",$("#i_width").val()+"x"+$("#i_height").val());
 			t.params.bg.r = t.validate("color",$("#i_bgr").val());
@@ -575,31 +509,366 @@ $(document).ready(function(){
 		</div>
 </div>
 <div id="page_manual" class="page">
-	<table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
-
-		foreach($this->manual as $k => $v){ $html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v.'</td></tr>'; }
-
-		$html .= '</table><h2>Examples</h2><ul><li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10"/></li><li>?d=666x24&bg=r&c=w&t=www.grgr.us<br/><img src="?d=666x24&bg=r&c=w&t=www.grgr.us"/></li><li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li></ul></div><div id="page_defaults" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
-	
-		foreach($this->defaults as $k => $v){
-			$html .= '<tr><td class="t-key">'.$k.'</td>';
-			if(is_array($v)){
-				$html .= '<td><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
-				foreach($v as $kk => $vv){ $html .= '<tr><td class="t-key">'.$kk.'</td><td>'.$vv.'</td></tr>'; }
-				$html .= '</table></td></tr>';
-			}else{ $html .= '<td>'.$v.'</td></tr>'; }
-		}
-
-		$html .= '</table></div><div id="page_colors" class="page"><p>Colors can be either rgba (rgb = 0-255, a = 0-100), or one of the color codes seen below</p><p><strong>Examples</strong> bg=123,123,123,100&c=0,0,0,100 | bg=de&c=g</p><table cellspacing="0" cellpadding="0"><tr><th class="t-code">code</th><th class="t-rgba">rgba</th><th class="t-color">color</th></tr>';
-
-		foreach($this->colors as $k => $v){
-			$alpha = number_format($v['a'] / 100, 1, '.', ',');
-			$html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v['r'].','.$v['g'].','.$v['b'].','.$v['a'].'</td><td style="background:rgba('.$v['r'].','.$v['g'].','.$v['b'].','.$alpha.');"></td></tr>';
-		}
-		
-		$html .='</table></div><p id="footer">&copy; 2011 <a href="http://www.grgrssll.com">www.grgrssll.com</a></p></div></body></html>';
-		header('Content-type: text/html');
-		echo $html;
+	<table cellspacing="0" cellpadding="0">
+		<tr>	
+			<th class="t-key">key</th>
+			<th class="t-value">value</th>
+		</tr>
+		<?php
+		foreach($this->manual as $k => $v){ 
+			?>
+			<tr>
+				<td class="t-key"><?php echo $k;?></td>
+				<td><?php echo $v;?></td>
+			</tr>
+			<?php
+			}
+		?>
+		</table>
+		<h2>Examples</h2>
+		<ul>
+			<li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10"/></li>
+			<li>?d=666x24&bg=r&c=w&t=www.grgr.us<br/><img src="?d=666x24&bg=r&c=w&t=www.grgr.us"/></li>
+			<li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li>
+		</ul>
+	</div>
+	<div id="page_defaults" class="page">
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<th class="t-key">key</th>
+				<th class="t-value">value</th>
+			</tr>
+			<?php
+			foreach($this->defaults as $k => $v){
+				?>
+				<tr>
+					<td class="t-key"><?php echo $k;?></td>
+				<?php
+				if(is_array($v)){
+					?>
+						<td>
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<th class="t-key">key</th>
+									<th class="t-value">value</th>
+								</tr>
+								<?php
+								foreach($v as $kk => $vv){ 
+									?>
+									<tr>
+										<td class="t-key"><?php echo $kk;?></td>
+										<td><?php echo $vv;?></td>
+									</tr>
+									<?php
+								}
+								?>
+							</table>
+						</td>
+					</tr>
+					<?php
+				}else{ 
+					?>
+					<td><?php echo $v;?></td>
+				</tr> 
+				<?php
+				}
+			}
+			?>
+		</table>
+	</div>
+	<div id="page_colors" class="page">
+		<p>Colors can be either rgba (rgb = 0-255, a = 0-100), or one of the color codes seen below</p>
+		<p><strong>Examples</strong> bg=123,123,123,100&c=0,0,0,100 | bg=de&c=g</p>
+		<table cellspacing="0" cellpadding="0">
+			<tr>	
+				<th class="t-code">code</th>
+				<th class="t-rgba">rgba</th>
+				<th class="t-color">color</th>
+			</tr>
+			<?php
+			foreach($this->colors as $k => $v){
+				$alpha = number_format($v['a'] / 100, 1, '.', ',');
+				?>
+				<tr>
+					<td class="t-key"><?php echo $k;?></td>
+					<td><?php echo $v['r'].','.$v['g'].','.$v['b'].','.$v['a'];?></td>
+					<td style="background:rgba(<?php echo $v['r'].','.$v['g'].','.$v['b'].','.$alpha;?>);"></td>
+				</tr>
+				<?php
+			}
+			?>
+		</table>
+	</div>
+	<p id="footer">&copy; 2011 <a href="http://www.grgrssll.com">www.grgrssll.com</a></p>
+</div>
+<style>
+html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,time, mark, audio, vide {margin: 0;padding: 0;border: 0;outline: 0;text-decoration: none;font-style: normal;font-weight: normal;font-size: 100%;vertical-align: baseline;background: transparent;font-family:Helvetica, Arial, sans-serif;color:#222;}
+input,select{font-family:Helvetica, Arial, sans-serif;}
+body, html{width:100%;height:100%;background:#fcfcfc;}
+article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary {display:block;}
+nav ul{list-style:none;}
+body {line-height: 1;font-size: 10px;font-family: Helvetica,Arial,sans-serif;}
+ol,ul {list-style: none;}
+blockquote,q {quotes: none;}
+blockquote:before,blockquote:after,q:before,q:after {content: "";content: none;}
+input:focus {outline: 1px #f20 solid;background-color: #ddd;border:0;}
+#info input:focus{outline:0;background:#fff;}
+ins {text-decoration: none;background-color: yellow;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse;border-spacing: 0;}
+a,a:link,a:visited,a:hover,a:active,a:focus{cursor:pointer;text-decoration:none;color:#06f;}
+#wrapper{
+margin: 0 auto;
+position:relative;
+width:960px;
+padding:20px;
+}
+#nav{
+border-bottom:1px #777 solid;
+padding-bottom:14px;
+}
+#nav ul{
+overflow:hidden;
+margin-top:10px;
+}
+#nav li{
+float:left;
+}
+#nav li a{
+display:block;
+padding:4px 8px;
+font-size:14px;
+color:#777;
+}
+#nav li a:hover{
+background:#ddd;
+}
+#nav li a.selected{
+color:#06f;
+}
+#nav h1{
+color:#666;
+font-size:22px;
+}
+#nav h1 span{
+font-size:14px;
+color:#777;
+}
+#nav h1 span a{
+font-size:14px;
+color:#06f;
+}
+.page{
+margin:20px 0;
+display:none;
+overflow:hidden;
+}
+#page_tool{
+display:block;
+}
+.page li,table{
+color:#777;
+font-family:droid sans mono, monospace;
+font-size:14px;
+border:1px #ddd solid;
+padding:4px;
+margin-bottom:20px;
+width:960px;
+}
+.page li{
+margin-bottom:10px;
+width:950px;
+}
+.page li img{
+margin-top:4px;
+}
+td{
+color:#777;
+padding:4px 20px 4px 8px;
+vertical-align:top;
+}
+td.t-key,th.t-key{
+color:#444;
+font-weight:bold;
+width:100px;
+}
+th.t-key,th{
+background:#444;
+color:#fff;
+padding:4px 20px 4px 8px;
+font-weight:bold;
+text-align:left;
+}
+td.t-key td.t-key{
+color:#666;
+font-weight:bold;
+}
+td strong{
+color:#444;
+font-weight:bold;
+}
+td em{
+color:#444;
+font-style:italic;
+}
+td table{
+background:#eee;
+width:auto;
+margin-bottom:0;
+}
+tr:nth-child(2n-1) td{
+background:#f5f5f5;
+}
+.page h2{
+color:#777;
+font-size:18px;
+font-weight:bold;
+margin-bottom:14px;
+}
+.page p{
+color:#777;
+font-size:14px;
+margin:10px 0;
+}
+strong{
+color:inherit;
+font-weight:bold;
+}
+#footer{
+position:absolute;
+bottom:0;
+right:10px;
+font-size:12px;
+margin:0;
+}
+#footer,#footer a{
+color:#777;
+}
+#footer a:hover{
+color:#0d0;
+}
+.element{
+overflow:hidden;
+margin-bottom:10px;
+padding:1px 0;
+}
+.element label{
+width:60px;
+display:block;
+color:#777;
+font-size:12px;
+float:left;
+margin-top:6px;
+}
+.element.g-col label{
+clear:left;
+}
+#link,.element select,.element input{
+display:block;
+color:#777;
+font-size:14px;
+font-family:droid sans mono, monospace;
+float:left;
+border:1px #ccc solid;
+padding:4px;
+margin-right:20px;
+margin-bottom:4px;
+}
+.element select{
+padding:2px;
+width:60px;
+}
+.element.g-dim input{
+width:60px;
+}
+.element.g-col input{
+width:200px;
+margin-right:10px;
+}
+#link,.element.g-copy input{
+width:446px;
+margin-right:0;
+}
+#link{
+width:950px;
+height:16px;
+float:none;
+margin-bottom:14px;
+}
+p.hint{
+font-size:12px;
+color:#777;
+float:left;
+margin:3px 0 0 8px;
+}
+.submit input{
+border:1px #bbb solid;
+color:#555;
+text-shadow:#eee 1px 1px 1px;
+font-family:helvetica, arial, sans-serif;
+font-size:14px;
+display:block;
+-border-radius:3px;
+-webkit-border-radius:3px;
+-moz-border-radius:3px;
+cursor:pointer;
+padding:4px 8px 2px 8px;
+background:#ccc;
+background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
+background: -moz-linear-gradient(top,  #eee,  #ccc);
+}
+.submit input:hover{
+color:#111;
+background:#777;
+background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#eee));
+background: -moz-linear-gradient(top,  #ccc,  #eee);
+}
+h3{
+font-size:16px;
+color:#999;
+font-weight:bold;
+margin-bottom:10px;
+}
+.group{
+border:1px #e7e7e7 solid;
+background:#f7f7f7;
+float:left;
+padding:10px;
+height:255px;
+margin-left:20px;
+margin-bottom:16px;
+}
+.result{
+clear:both;
+}
+#first_group{
+width:380px;
+margin-left:0;
+}
+#second_group{
+width:516px;
+}
+p.value{
+font-size:12px;
+float:left;
+color:#777;
+width:60px;
+text-align:right;
+position:relative;
+top:-2px;
+}
+p.value.red{color:#f20;}
+p.value.green{color:#0b0;}
+p.value.blue{color:#05d;}
+::selection {color:#0d0;}
+.element.g-rad label{width:95px;}
+.element.g-rad input{width:155px;}
+.element.g-rad{margin-bottom:8px;}
+.element.g-dim{margin-bottom:7px;}
+</style>
+</body>
+</html>
+		<?php
 		die();
 		
 	}
