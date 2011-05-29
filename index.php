@@ -62,7 +62,7 @@ class Img {
 			'background'		=> $this->colors['de'],
 			'color'			=> $this->colors['g'],
 			'radius'			=> 0,
-			'cache'			=> ($_SERVER['SERVER_NAME'] === 'localhost') ? 0 : 1,
+			'cache'			=> 1,
 			'debug'			=> 0
 		);
 
@@ -319,7 +319,7 @@ class Img {
 		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
 		'br'     => 'border-radius: 0-50 % of shortest side',
 		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
-		'debug' => 'enable debugging (1 | 0)<br/>default value: 0' 
+		'debug' => 'enable debugging (1 | 0) turns content type to text/html to see errors<br/>default value: 0' 
 	);
 
 	private function help(){
