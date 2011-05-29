@@ -7,7 +7,7 @@
  * Script: index.php
  * Description: creates a sized and colored image based on GET params
  * Version 1.0.3
- * Last Revision: 05/29/2011 05:08:34
+ * Last Revision: 05/29/2011 14:39:34
  * 
  */
 
@@ -384,24 +384,41 @@ function Builder(){
 			}
 			return string.slice(0,-1);
 		},
-		"full" : function(){ return t.URL.base + t.URL.toString(); }
+		"full" : function(){ 
+			return t.URL.base + t.URL.toString(); 
+		}
 	};
-	this.build = function(){ var url = t.URL.full(); $("#link").val(url); $("#image").attr("src",url); };
+	this.build = function(){ 
+		var url = t.URL.full(); 
+		$("#link").val(url); 
+		$("#image").attr("src",url); 
+	};
 	this.validate = function(type, value){
 		var result = false;
 		switch(type){
 			case "dim" : 
-				var v = value.split("x"); result = parseInt(v[0])+"x"+parseInt(v[1]); break;
+				var v = value.split("x"); 
+				result = parseInt(v[0])+"x"+parseInt(v[1]); 
+				break;
 			case "color" :
-				var v = parseInt(value); result = (v < 0) ? 48 : ((v > 255) ? 48 : v); break;
+				var v = parseInt(value); 
+				result = (v < 0) ? 48 : ((v > 255) ? 48 : v); 
+				break;
 			case "alpha" : 
-				var v = parseInt(value); result = (v < 0) ? 100 : ((v > 100) ? 100 : v); break;
+				var v = parseInt(value); 
+				result = (v < 0) ? 100 : ((v > 100) ? 100 : v); 
+				break;
 			case "text" : 
-				result = encodeURIComponent(value); break;
+				result = encodeURIComponent(value); 
+				break;
 			case "font" : 
-				var v = parseInt(value); result = (value) ? value : 4; break;
+				var v = parseInt(value); 
+				result = (value) ? value : 4; 
+				break;
 			case "rad" : 
-				var v = parseInt(value); result = (v < 0) ? 0 : ((v > 50) ? 50 : v); break;
+				var v = parseInt(value); 
+				result = (v < 0) ? 0 : ((v > 50) ? 50 : v); 
+				break;
 		}
 		return result;
 	};
