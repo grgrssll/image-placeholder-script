@@ -248,13 +248,13 @@ class Img {
 	}
 
 	private $manual = array( 
-		't'     => 'text to display: <strong>wxh</strong> converted into dimensions. example: "100x100" <br/>default value: wxh',
+		't'     => 'text to display: <strong>wxh</strong> converted into dimensions. example: 420x259 <br/>default value: wxh',
 		'f'     => 'font size: (1 - 5) from GD image library<br/>default value: 4',
-		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em>, or <em>square</em>)<br/>default value: 100x100',
-		'bg'    => 'background: r (0-255), g (0-255), b (0-255), a(0-100) | or color code <em>see Colors</em><br/>default value: 63,63,63,100 | "de"',
-		'c'     => 'font color: r (0-255), g (0-255), b (0-255), a(0-100) | or color code <em>see Colors</em><br/>default value: 0,223,0,100 | "g"',
-		'cache' => 'enable caching (1|0)<br/>default value: 1',
-		'debug' => 'enable debugging (1|0)<br/>default value: 0' 
+		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em> | <em>square</em>)<br/>default value: 100x100 | 100',
+		'bg'    => 'background: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 63,63,63,100 | de',
+		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
+		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
+		'debug' => 'enable debugging (1 | 0)<br/>default value: 0' 
 	);
 
 	private function help(){
@@ -262,7 +262,7 @@ class Img {
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https' : 'http';
 		$base = $protocol.'://'.$_SERVER['SERVER_NAME'].str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 	
-		$html = '<!DOCTYPE html><html lang="en"><head><title>grgr.us | placeholder image creator</title><meta charset="utf-8"><meta name="keywords" content=""><meta name="description" content=""><link rel="shortcut icon" href="?d=16&bg=de&t=gr&fc=g"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+		$html = '<!DOCTYPE html><html lang="en"><head><title>grgr.us | placeholder image creator</title><meta charset="utf-8"><meta name="keywords" content=""><meta name="description" content=""><link rel="shortcut icon" href="?d=16&bg=de&t=gr&c=g&f=2"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <style>
 html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,time, mark, audio, vide {margin: 0;padding: 0;border: 0;outline: 0;text-decoration: none;font-style: normal;font-weight: normal;font-size: 100%;vertical-align: baseline;background: transparent;font-family:Helvetica, Arial, sans-serif;
 color:#222;}
@@ -308,7 +308,7 @@ tr:nth-child(2n-1) td{background:#f5f5f5;}
 .page p{color:#777;font-size:14px;margin:10px 0;}
 strong{color:inherit;font-weight:bold;}
 #footer{position:absolute;bottom:0;right:10px;font-size:12px;margin:0;}
-#footer a{color:#555;}
+#footer,#footer a{color:#777;}
 #footer a:hover{color:#0d0;}
 .element{overflow:hidden;margin-bottom:10px;padding:1px 0;}
 .element label{width:60px;display:block;color:#777;font-size:12px;float:left;margin-top:6px;}
@@ -411,7 +411,7 @@ $(document).ready(function(){
 		var height = $(window).height();
 		var wh = height - 40;
 		var wrapper = $("#wrapper");
-		if(wrapper.height() < wh){ wrapper.css("height",wh+"px"); }
+		if(wrapper.height() < wh){ wrapper.css("height",wh-4+"px"); }
 	}
 	$(window).bind("resize", function(){ size(); });
 	$("#nav li a").live("click", function(){
@@ -422,12 +422,13 @@ $(document).ready(function(){
 		$("#page_"+id).show();
 		size();
 	});
+	size();
 });
-</script></head><body><div id="wrapper"><div id="nav"><h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a></span></h1><ul><li><a class="selected" id="p_tool">Tool</a></li><li><a id="p_manual">Manual</a></li><li><a id="p_defaults">Defaults</a></li><li><a id="p_colors">Colors</a></li></ul></div><div id="page_tool" class="page"><div class="group" id="first_group"><h3>Dimensions</h3><div class="element g-dim"><label for="i_width">Width</label> <input type="number" id="i_width" value="100"/><label for="i_height">Height</label> <input type="number" id="i_height" value="100"/></div><h3>Background</h3><div class="element g-col"><label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/><p class="value red bg">48 / 255</p><label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/><p class="value green bg">48 / 255</p><label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/><p class="value blue bg">48 / 255</p><label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/><p class="value alpha bg">100%</p></div></div><div class="group" id="second_group"><h3>Text</h3><div clas="sub-group"><div class="element g-copy"><label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/></div></div><div clas="sub-group"><div class="element g-sel"><label for="i_fontsize">Font Size</label> <select id="i_fontsize"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option><option value="5">5</option></select></div></div><div clas="sub-group"><h3>Font Color</h3><div class="element g-col"><label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/><p class="value red col">0 / 255</p><label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/><p class="value green col">232 / 255</p><label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/><p class="value blue col">0 / 255</p><label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/><p class="value alpha col">100%</p></div></div></div><div class="result"><textarea id="link"></textarea><img id="image" /></div></div><div id="page_manual" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
+</script></head><body><div id="wrapper"><div id="nav"><h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a> &#8226; <a target="_blank" href="https://github.com/grgrssll/image-placeholder-script">Download on github</a></span></h1><ul><li><a class="selected" id="p_tool">Tool</a></li><li><a id="p_manual">Man Page</a></li><li><a id="p_defaults">Defaults</a></li><li><a id="p_colors">Colors</a></li></ul></div><div id="page_tool" class="page"><div class="group" id="first_group"><h3>Dimensions</h3><div class="element g-dim"><label for="i_width">Width</label> <input type="number" id="i_width" value="100"/><label for="i_height">Height</label> <input type="number" id="i_height" value="100"/></div><h3>Background</h3><div class="element g-col"><label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/><p class="value red bg">48 / 255</p><label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/><p class="value green bg">48 / 255</p><label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/><p class="value blue bg">48 / 255</p><label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/><p class="value alpha bg">100%</p></div></div><div class="group" id="second_group"><h3>Text</h3><div clas="sub-group"><div class="element g-copy"><label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/></div></div><div clas="sub-group"><div class="element g-sel"><label for="i_fontsize">Font Size</label> <select id="i_fontsize"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option><option value="5">5</option></select></div></div><div clas="sub-group"><h3>Font Color</h3><div class="element g-col"><label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/><p class="value red col">0 / 255</p><label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/><p class="value green col">232 / 255</p><label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/><p class="value blue col">0 / 255</p><label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/><p class="value alpha col">100%</p></div></div></div><div class="result"><textarea id="link"></textarea><img id="image" /></div></div><div id="page_manual" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
 
 		foreach($this->manual as $k => $v){ $html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v.'</td></tr>'; }
 
-		$html .= '</table><h2>Examples</h2><ul><li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=2&t=wxh%20Hello%20World<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=2&t=wxh%20Hello%20World"/></li><li>?d=666x24&bg=le&c=db&t=www.grgr.us<br/><img src="?d=666x24&bg=le&c=db&t=www.grgr.us"/></li><li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li></ul></div><div id="page_defaults" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
+		$html .= '</table><h2>Examples</h2><ul><li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World"/></li><li>?d=666x24&bg=r&c=w&t=www.grgr.us<br/><img src="?d=666x24&bg=r&c=w&t=www.grgr.us"/></li><li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li></ul></div><div id="page_defaults" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
 	
 		foreach($this->defaults as $k => $v){
 			$html .= '<tr><td class="t-key">'.$k.'</td>';
