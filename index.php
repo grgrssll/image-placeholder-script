@@ -174,7 +174,7 @@ class Img {
 			$alpha = imagecolorallocatealpha($image, 0, 0, 0, 127);
 			imagefill($image, 0, 0, $alpha);
 			$bg = $opts['background'];
-			if($bg['a'] < 100){
+			if(!$opts['radius'] && $bg['a'] < 100){
 				$alpha = intval(round(((100 - $bg['a']) * 127) / 100));
 				$background = imagecolorallocatealpha($image, $bg['r'], $bg['g'], $bg['b'], $alpha);
 			}else{
@@ -294,7 +294,7 @@ class Img {
 		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em> | <em>square</em>)<br/>default value: 100x100 | 100',
 		'bg'    => 'background: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 63,63,63,100 | de',
 		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
-		'br'     => 'border-radius: 0-5- % for rounded corners',
+		'br'     => 'border-radius: 0-50 % for rounded corners. DOES NOT work with opacity on bg at the moment.',
 		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
 		'debug' => 'enable debugging (1 | 0)<br/>default value: 0' 
 	);
@@ -477,7 +477,7 @@ $(document).ready(function(){
 
 		foreach($this->manual as $k => $v){ $html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v.'</td></tr>'; }
 
-		$html .= '</table><h2>Examples</h2><ul><li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World"/></li><li>?d=666x24&bg=r&c=w&t=www.grgr.us<br/><img src="?d=666x24&bg=r&c=w&t=www.grgr.us"/></li><li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li></ul></div><div id="page_defaults" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
+		$html .= '</table><h2>Examples</h2><ul><li>?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10<br/><img src="?d=444x44&bg=0,48,112,55&c=234,234,0,100&f=5&t=wxh%20Hello%20World&br=10"/></li><li>?d=666x24&bg=r&c=w&t=www.grgr.us<br/><img src="?d=666x24&bg=r&c=w&t=www.grgr.us"/></li><li>?d=16&bg=48,48,48,100&t=GR&f=1<br/><img src="?d=16&bg=48,48,48,100&t=GR&f=1"/></li></ul></div><div id="page_defaults" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
 	
 		foreach($this->defaults as $k => $v){
 			$html .= '<tr><td class="t-key">'.$k.'</td>';
