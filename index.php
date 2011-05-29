@@ -41,7 +41,7 @@ class Img {
 		'd'     => 'dimensions', 
 		'bg'    => 'background', 
 		'c'     => 'color', 
-		'br'	    => 'radius',
+		'br'    => 'radius',
 		'cache' => 'cache', 
 		'debug' => 'debug' 
 	);
@@ -58,10 +58,10 @@ class Img {
 		$this->defaults = array(
 			'text'          => 'wxh',
 			'font'          => 4,
-			'dimensions'	    => array('w' => 100, 'h' => 100),
-			'background'	    => $this->colors['de'],
+			'dimensions'    => array('w' => 100, 'h' => 100),
+			'background'    => $this->colors['de'],
 			'color'         => $this->colors['g'],
-			'radius'	        => 0,
+			'radius'        => 0,
 			'cache'         => 1,
 			'debug'         => 0
 		);
@@ -93,7 +93,7 @@ class Img {
 	private function cache(){
 		
 		if($this->options['cache'] && extension_loaded('memcache')){
-			$this->memcache = new Memcache();			
+			$this->memcache = new Memcache();
 			$this->memcache->connect('127.0.0.1', 11211);
 			$this->hashify();
 		}else{
@@ -261,7 +261,7 @@ class Img {
 	private function img(){
 		
 		$image = $this->get();
-		if($this->isValid($image)){	
+		if($this->isValid($image)){
 			imagepng($image);
 			imagedestroy($image);
 			return true;
