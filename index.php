@@ -388,7 +388,7 @@ p.hint{font-size:12px;color:#777;float:left;margin:3px 0 0 8px;}
 .submit input{border:1px #bbb solid;color:#555;text-shadow:#eee 1px 1px 1px;font-family:helvetica, arial, sans-serif;font-size:14px;display:block;-border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;cursor:pointer;padding:4px 8px 2px 8px;background:#ccc;background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));background: -moz-linear-gradient(top,  #eee,  #ccc); }
 .submit input:hover{color:#111;background:#777;background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#eee));background: -moz-linear-gradient(top,  #ccc,  #eee); }
 h3{font-size:16px;color:#999;font-weight:bold;margin-bottom:10px;}
-.group{border:1px #e7e7e7 solid;background:#f7f7f7;float:left;padding:10px;height:255px;margin-left:20px;margin-bottom:20px;}
+.group{border:1px #e7e7e7 solid;background:#f7f7f7;float:left;padding:10px;height:255px;margin-left:20px;margin-bottom:16px;}
 .result{clear:both;}
 #first_group{width:380px;margin-left:0;}
 #second_group{width:516px;}
