@@ -6,8 +6,8 @@
  * 
  * Script: index.php
  * Description: creates a sized and colored image based on GET params
- * Version 1.0
- * Last Revision: 05/28/2011 23:58:34
+ * Version 1.0.1
+ * Last Revision: 05/29/2011 00:36:34
  * 
  */
  
@@ -46,6 +46,9 @@ class Img {
 	private $memcache;
 
 	public function __construct($input){
+
+		if(!extension_loaded('gd')){ die('GD Library is required for this script'); }
+
 		
 		$this->defaults = array(
 			'text' 			=> 'wxh',
