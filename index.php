@@ -326,7 +326,7 @@ class Img {
 		
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https' : 'http';
 		$base = $protocol.'://'.$_SERVER['SERVER_NAME'].str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
-	
+
 		$html = '<!DOCTYPE html><html lang="en"><head><title>grgr.us | placeholder image creator</title><meta charset="utf-8"><meta name="keywords" content=""><meta name="description" content=""><link rel="shortcut icon" href="?d=16&bg=de&t=gr&c=g&f=2"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <style>
 html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,time, mark, audio, vide {margin: 0;padding: 0;border: 0;outline: 0;text-decoration: none;font-style: normal;font-weight: normal;font-size: 100%;vertical-align: baseline;background: transparent;font-family:Helvetica, Arial, sans-serif;
@@ -379,16 +379,16 @@ strong{color:inherit;font-weight:bold;}
 .element label{width:60px;display:block;color:#777;font-size:12px;float:left;margin-top:6px;}
 .element.g-col label{clear:left;}
 #link,.element select,.element input{display:block;color:#777;font-size:14px;font-family:droid sans mono, monospace;float:left;border:1px #ccc solid;padding:4px;margin-right:20px;margin-bottom:4px;}
-.element select{padding:2px;width:60px;margin-bottom:0;}
-.element.g-dim input{width:60px;margin-bottom:0;}
+.element select{padding:2px;width:60px;}
+.element.g-dim input{width:60px;}
 .element.g-col input{width:200px;margin-right:10px;}
-#link,.element.g-copy input{width:446px;margin-right:0;margin-bottom:0;}
+#link,.element.g-copy input{width:446px;margin-right:0;}
 #link{width:950px;height:16px;float:none;margin-bottom:14px;}
 p.hint{font-size:12px;color:#777;float:left;margin:3px 0 0 8px;}
 .submit input{border:1px #bbb solid;color:#555;text-shadow:#eee 1px 1px 1px;font-family:helvetica, arial, sans-serif;font-size:14px;display:block;-border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;cursor:pointer;padding:4px 8px 2px 8px;background:#ccc;background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));background: -moz-linear-gradient(top,  #eee,  #ccc); }
 .submit input:hover{color:#111;background:#777;background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#eee));background: -moz-linear-gradient(top,  #ccc,  #eee); }
 h3{font-size:16px;color:#999;font-weight:bold;margin-bottom:10px;}
-.group{border:1px #e7e7e7 solid;background:#f7f7f7;float:left;padding:10px;height:248px;margin-left:20px;margin-bottom:20px;}
+.group{border:1px #e7e7e7 solid;background:#f7f7f7;float:left;padding:10px;height:255px;margin-left:20px;margin-bottom:20px;}
 .result{clear:both;}
 #first_group{width:380px;margin-left:0;}
 #second_group{width:516px;}
@@ -398,8 +398,9 @@ p.value.green{color:#0b0;}
 p.value.blue{color:#05d;}
 ::selection {color:#0d0;}
 .element.g-rad label{ width:95px;}
-.element.g-rad input{ width:155px;margin-bottom:0;}
-.element.g-rad{margin-bottom:0;}
+.element.g-rad input{ width:155px;}
+.element.g-rad{margin-bottom:8px;}
+.element.g-dim{margin-bottom:7px;}
 </style>
 <script>
 function Builder(){
@@ -497,7 +498,84 @@ $(document).ready(function(){
 	});
 	size();
 });
-</script></head><body><div id="wrapper"><div id="nav"><h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a> &#8226; <a target="_blank" href="https://github.com/grgrssll/image-placeholder-script">Download on github</a></span></h1><ul><li><a class="selected" id="p_tool">Tool</a></li><li><a id="p_manual">Man Page</a></li><li><a id="p_defaults">Defaults</a></li><li><a id="p_colors">Colors</a></li></ul></div><div id="page_tool" class="page"><div class="group" id="first_group"><h3>Dimensions</h3><div class="sub-group"><div class="element g-dim"><label for="i_width">Width</label> <input type="number" id="i_width" value="100"/><label for="i_height">Height</label> <input type="number" id="i_height" value="100"/></div></div><div class="sub-group" class="experimental"><div class="element g-rad"><label for="i_rad">Border Radius</label> <input type="range" id="i_rad" value="0" min="0" max="50"/><p class="value rad">0%</p></div></div><h3>Background</h3><div class="element g-col"><label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/><p class="value red bg">48 / 255</p><label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/><p class="value green bg">48 / 255</p><label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/><p class="value blue bg">48 / 255</p><label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/><p class="value alpha bg">100%</p></div></div><div class="group" id="second_group"><h3>Text</h3><div clas="sub-group"><div class="element g-copy"><label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/></div></div><div clas="sub-group"><div class="element g-sel"><label for="i_fontsize">Font Size</label> <select id="i_fontsize"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option><option value="5">5</option></select></div></div><div clas="sub-group"><h3>Font Color</h3><div class="element g-col"><label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/><p class="value red col">0 / 255</p><label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/><p class="value green col">232 / 255</p><label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/><p class="value blue col">0 / 255</p><label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/><p class="value alpha col">100%</p></div></div></div><div class="result"><textarea id="link"></textarea><img id="image" /></div></div><div id="page_manual" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="nav">
+		<h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a> &#8226; <a target="_blank" href="https://github.com/grgrssll/image-placeholder-script">Download on github</a></span></h1>
+		<ul>
+			<li><a class="selected" id="p_tool">Tool</a></li>
+			<li><a id="p_manual">Man Page</a></li>
+			<li><a id="p_defaults">Defaults</a></li>
+			<li><a id="p_colors">Colors</a></li>
+		</ul>
+	</div>
+	<div id="page_tool" class="page">
+		<div class="group" id="first_group">
+			<div class="sub-group">
+				<h3>Dimensions</h3>
+				<div class="element g-dim">
+					<label for="i_width">Width</label> <input type="number" id="i_width" value="100"/>
+					<label for="i_height">Height</label> <input type="number" id="i_height" value="100"/>
+				</div>
+				<div class="element g-rad">
+					<label for="i_rad">Border Radius</label> <input type="range" id="i_rad" value="0" min="0" max="50"/>
+					<p class="value rad">0%</p>
+				</div>
+			</div>
+			<div class="sub-group">
+				<h3>Background</h3>
+				<div class="element g-col">
+					<label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/>
+					<p class="value red bg">48 / 255</p>
+					<label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/>
+					<p class="value green bg">48 / 255</p>
+					<label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/>
+					<p class="value blue bg">48 / 255</p>
+					<label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/>
+					<p class="value alpha bg">100%</p>
+				</div>
+			</div>
+		</div>
+		<div class="group" id="second_group">
+			<div clas="sub-group">
+				<h3>Text</h3>
+				<div class="element g-copy">
+					<label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/>
+				</div>
+				<div class="element g-sel">
+					<label for="i_fontsize">Font Size</label> 
+					<select id="i_fontsize">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4" selected="selected">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+			<div clas="sub-group">
+				<h3>Font Color</h3>
+				<div class="element g-col">
+					<label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/>
+					<p class="value red col">0 / 255</p>
+					<label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/>
+					<p class="value green col">232 / 255</p>
+					<label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/>
+					<p class="value blue col">0 / 255</p>
+					<label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/>
+					<p class="value alpha col">100%</p>
+				</div>
+			</div>
+		</div>
+		<div class="result">
+			<textarea id="link"></textarea>
+			<img id="image" />
+		</div>
+</div>
+<div id="page_manual" class="page">
+	<table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
 
 		foreach($this->manual as $k => $v){ $html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v.'</td></tr>'; }
 
@@ -523,6 +601,7 @@ $(document).ready(function(){
 		header('Content-type: text/html');
 		echo $html;
 		die();
+		
 	}
 }
 
