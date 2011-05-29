@@ -260,7 +260,8 @@ class Img {
 	private function help(){
 		
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https' : 'http';
-		$base = $protocol.'://'.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'];
+		$script = ($_SERVER['SCRIPT_NAME'] == '/index.php') ? '' : $_SERVER['SCRIPT_NAME'];
+		$base = $protocol.'://'.$_SERVER['SERVER_NAME'].$script;
 	
 		$html = '<!DOCTYPE html><html lang="en"><head><title>grgr.us | placeholder image creator</title><meta charset="utf-8"><meta name="keywords" content=""><meta name="description" content=""><link rel="shortcut icon" href="?d=16&bg=de&t=gr&fc=g"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <style>
