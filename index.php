@@ -202,10 +202,19 @@ class Img {
 				imagecopyresampled($image, $image2, $farx, 0, $rad, 0, $rad, $rad, $rad, $rad); 			#ne
 				imagecopyresampled($image, $image2, $farx, $fary, $circrad, 0, $rad, $rad, $rad, $rad); 	#se
 				imagecopyresampled($image, $image2, 0, $fary, $circ, 0, $rad, $rad, $rad, $rad); 		#sw
-				
-				imagefilledrectangle($image, $rad, 0, $farx-1, $rad-1, $background);
-				imagefilledrectangle($image, $rad, $fary, $farx-1, $opts['dimensions']['h'], $background); 
-				imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary-1, $background); 
+
+				if($opts['radius'] == 50){
+					if($opts['dimensions']['w'] < $opts['dimensions']['h']){
+						imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary-1, $background); 
+					}elseif($opts['dimensions']['w'] > $opts['dimensions']['h']){
+						imagefilledrectangle($image, $rad, 0, $farx-1, $rad-1, $background);
+						imagefilledrectangle($image, $rad, $fary, $farx-1, $opts['dimensions']['h'], $background); 
+					}
+				}else{
+					imagefilledrectangle($image, $rad, 0, $farx-1, $rad-1, $background);
+					imagefilledrectangle($image, $rad, $fary, $farx-1, $opts['dimensions']['h'], $background); 
+					imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary-1, $background); 
+				}
 
 				imagedestroy($image2);
 				
@@ -465,6 +474,7 @@ function Builder(){
 		var test = document.getElementById("i_bgr");
 		if(test.type == "text"){ $(".element.g-col input, .element.g-rad input").css("width","60px"); }
 		$(".element input, .element select").bind("keyup change mouseup", function(){ t.build(); });
+		//$(".element input, .element select").bind("keyup change mouseup input", function(){ t.build(); });
 		$("#link").bind("click", function(){ this.select(); });
 		t.build();
 	};
