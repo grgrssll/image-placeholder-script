@@ -881,7 +881,9 @@ p.value.blue{color:#05d;}
 .element.g-rad label{width:95px;}
 .element.g-rad input{width:155px;}
 .element.g-rad{margin-bottom:8px;}
-.element.g-dim{margin-bottom:7px;}
+.element.g-dim{margin-bottom:5px;}
+.element.g-copy{margin-bottom:6px;}
+.element.g-sel{margin-bottom:10px;}
 </style>
 </body>
 </html>
