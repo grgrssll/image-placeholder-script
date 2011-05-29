@@ -2,14 +2,19 @@
 /*
  * Developer : Greg Russell (grgrssll@gmail.com)
  * Date : 05/28/2011
- * All code (c)2011 grgrssll.com all rights reserved
+ * All code © 2011 grgrssll.com all rights reserved
  * 
  * Script: index.php
  * Description: creates a sized and colored image based on GET params
- * Version 1.0.1
- * Last Revision: 05/29/2011 00:36:34
+ * Version 1.0.2
+ * Last Revision: 05/29/2011 01:38:34
  * 
  */
+
+#TODO 
+# refill inputs on validate (js) incase bad data is entered correct it
+# allow for selection of preselected colors in tool
+# expand preselected color library (necessary?)
  
 date_default_timezone_set('America/Los_Angeles');
 
@@ -36,6 +41,7 @@ class Img {
 		'd'     => 'dimensions', 
 		'bg'    => 'background', 
 		'c'     => 'color', 
+		'br'		=> 'radius',
 		'cache' => 'cache', 
 		'debug' => 'debug' 
 	);
@@ -48,14 +54,14 @@ class Img {
 	public function __construct($input){
 
 		if(!extension_loaded('gd')){ die('GD Library is required for this script'); }
-
 		
 		$this->defaults = array(
-			'text' 			=> 'wxh',
+			'text'			=> 'wxh',
 			'font'			=> 4,
-			'dimensions' 	=> array('w' => 100, 'h' => 100),
-			'background' 	=> $this->colors['de'],
-			'color' 			=> $this->colors['g'],
+			'dimensions'		=> array('w' => 100, 'h' => 100),
+			'background'		=> $this->colors['de'],
+			'color'			=> $this->colors['g'],
+			'radius'			=> 0,
 			'cache'			=> 1,
 			'debug'			=> 0
 		);
@@ -124,6 +130,10 @@ class Img {
 				$i = intval($value);
 				$filter = ($i < 6 && $i > -1) ? $i : 4;
 				break;
+			case 'radius':
+				$i = intval($value);
+				$filter = ($i < 51 && $i > -1) ? $i : 0;
+				break;
 			case 'cache':
 				$filter = ($value) ? true : false;
 				break;
@@ -170,7 +180,24 @@ class Img {
 			}else{
 				$background = imagecolorallocate($image, $bg['r'], $bg['g'], $bg['b']);
 			}
-			imagefill($image, 0, 0, $background);
+			if($opts['radius']){
+				if($opts['dimensions']['w'] > $opts['dimensions']['h']){
+					$rad =  intval(ceil($opts['dimensions']['h'] * ($opts['radius'] / 100)));
+				}else{
+					$rad =  intval(ceil($opts['dimensions']['w'] * ($opts['radius'] / 100)));
+				}
+				$circ = $rad * 2;
+				$farx = $opts['dimensions']['w'] - $rad;
+				$fary = $opts['dimensions']['h'] - $rad;
+				imagefilledrectangle($image, $rad, 0, $farx, $opts['dimensions']['h'], $background); 
+				imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary, $background); 
+				imagefilledellipse($image, $rad, $rad, $circ, $circ, $background); #nw corner
+				imagefilledellipse($image, $farx, $rad, $circ, $circ, $background); #ne corner
+				imagefilledellipse($image, $farx, $fary, $circ, $circ, $background); #sw corner
+				imagefilledellipse($image, $rad, $fary, $circ, $circ, $background); #se corner
+			}else{
+				imagefill($image, 0, 0, $background);
+			}
 			$text = str_replace('wxh', $opts['dimensions']['w'].'x'.$opts['dimensions']['h'], $opts['text']);
 			$length = strlen($text);
 			if($length){
@@ -267,6 +294,7 @@ class Img {
 		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em> | <em>square</em>)<br/>default value: 100x100 | 100',
 		'bg'    => 'background: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 63,63,63,100 | de',
 		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
+		'br'     => 'border-radius: 0-5- % for rounded corners',
 		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
 		'debug' => 'enable debugging (1 | 0)<br/>default value: 0' 
 	);
@@ -328,8 +356,8 @@ strong{color:inherit;font-weight:bold;}
 .element label{width:60px;display:block;color:#777;font-size:12px;float:left;margin-top:6px;}
 .element.g-col label{clear:left;}
 #link,.element select,.element input{display:block;color:#777;font-size:14px;font-family:droid sans mono, monospace;float:left;border:1px #ccc solid;padding:4px;margin-right:20px;margin-bottom:4px;}
-.element select{padding:2px;width:50px;margin-bottom:0;}
-.element.g-dim input{width:50px;}
+.element select{padding:2px;width:60px;margin-bottom:0;}
+.element.g-dim input{width:60px;margin-bottom:0;}
 .element.g-col input{width:200px;margin-right:10px;}
 #link,.element.g-copy input{width:446px;margin-right:0;margin-bottom:0;}
 #link{width:950px;height:16px;float:none;margin-bottom:14px;}
@@ -346,6 +374,9 @@ p.value.red{color:#f20;}
 p.value.green{color:#0b0;}
 p.value.blue{color:#05d;}
 ::selection {color:#0d0;}
+.element.g-rad label{ width:95px;}
+.element.g-rad input{ width:155px;margin-bottom:0;}
+.element.g-rad{margin-bottom:0;}
 </style>
 <script>
 function Builder(){
@@ -355,7 +386,8 @@ function Builder(){
 		"f"  : "4",
 		"t"  : "wxh"	,
 		"bg" : { "r" : 48, "g" : 48, "b" : 48, "a" : 100 },
-		"c"  : { "r" : 0, "g" : 232, "b" : 0, "a" : 100 }
+		"c"  : { "r" : 0, "g" : 232, "b" : 0, "a" : 100 },
+		"br" : 0
 	};
 	this.URL = {
 		"base" : "'.$base.'",
@@ -371,6 +403,7 @@ function Builder(){
 			t.params.c.a  = t.validate("alpha",$("#i_ca").val());
 			t.params.t    = t.validate("text",$("#i_text").val());
 			t.params.f    = t.validate("font",$("#i_fontsize").val());
+			t.params.br    = t.validate("rad",$("#i_rad").val());
 			$("p.bg.red").html(t.params.bg.r+" / 255");
 			$("p.bg.green").html(t.params.bg.g+" / 255");
 			$("p.bg.blue").html(t.params.bg.b+" / 255");
@@ -379,6 +412,7 @@ function Builder(){
 			$("p.col.green").html(t.params.c.g+" / 255");
 			$("p.col.blue").html(t.params.c.b+" / 255");
 			$("p.col.alpha").html(t.params.c.a+"%");
+			$("p.rad").html(t.params.br+"%");
 		},
 		"toString" : function(){
 			t.URL.set();
@@ -408,12 +442,14 @@ function Builder(){
 				result = encodeURIComponent(value); break;
 			case "font" : 
 				var v = parseInt(value); result = (value) ? value : 4; break;
+			case "rad" : 
+				var v = parseInt(value); result = (v < 0) ? 0 : ((v > 50) ? 50 : v); break;
 		}
 		return result;
 	};
 	this.init = function(){
 		var test = document.getElementById("i_bgr");
-		if(test.type == "text"){ $(".element.g-col input").css("width","50px"); }
+		if(test.type == "text"){ $(".element.g-col input, .element.g-rad input").css("width","60px"); }
 		$(".element input, .element select").bind("keyup change mouseup", function(){ t.build(); });
 		$("#link").bind("click", function(){ this.select(); });
 		t.build();
@@ -423,9 +459,8 @@ $(document).ready(function(){
 	var b = new Builder().init();
 	function size(){
 		var height = $(window).height();
-		var wh = height - 40;
 		var wrapper = $("#wrapper");
-		if(wrapper.height() < wh){ wrapper.css("height",wh-4+"px"); }
+		if(wrapper.height() < height - 40){ wrapper.css("height",height - 44+"px"); }
 	}
 	$(window).bind("resize", function(){ size(); });
 	$("#nav li a").live("click", function(){
@@ -438,7 +473,7 @@ $(document).ready(function(){
 	});
 	size();
 });
-</script></head><body><div id="wrapper"><div id="nav"><h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a> &#8226; <a target="_blank" href="https://github.com/grgrssll/image-placeholder-script">Download on github</a></span></h1><ul><li><a class="selected" id="p_tool">Tool</a></li><li><a id="p_manual">Man Page</a></li><li><a id="p_defaults">Defaults</a></li><li><a id="p_colors">Colors</a></li></ul></div><div id="page_tool" class="page"><div class="group" id="first_group"><h3>Dimensions</h3><div class="element g-dim"><label for="i_width">Width</label> <input type="number" id="i_width" value="100"/><label for="i_height">Height</label> <input type="number" id="i_height" value="100"/></div><h3>Background</h3><div class="element g-col"><label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/><p class="value red bg">48 / 255</p><label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/><p class="value green bg">48 / 255</p><label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/><p class="value blue bg">48 / 255</p><label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/><p class="value alpha bg">100%</p></div></div><div class="group" id="second_group"><h3>Text</h3><div clas="sub-group"><div class="element g-copy"><label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/></div></div><div clas="sub-group"><div class="element g-sel"><label for="i_fontsize">Font Size</label> <select id="i_fontsize"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option><option value="5">5</option></select></div></div><div clas="sub-group"><h3>Font Color</h3><div class="element g-col"><label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/><p class="value red col">0 / 255</p><label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/><p class="value green col">232 / 255</p><label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/><p class="value blue col">0 / 255</p><label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/><p class="value alpha col">100%</p></div></div></div><div class="result"><textarea id="link"></textarea><img id="image" /></div></div><div id="page_manual" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
+</script></head><body><div id="wrapper"><div id="nav"><h1>Placeholder Image Creator <span>by <a href="http://www.grgrssll.com">Greg Russell</a> &#8226; <a target="_blank" href="https://github.com/grgrssll/image-placeholder-script">Download on github</a></span></h1><ul><li><a class="selected" id="p_tool">Tool</a></li><li><a id="p_manual">Man Page</a></li><li><a id="p_defaults">Defaults</a></li><li><a id="p_colors">Colors</a></li></ul></div><div id="page_tool" class="page"><div class="group" id="first_group"><h3>Dimensions</h3><div class="sub-group"><div class="element g-dim"><label for="i_width">Width</label> <input type="number" id="i_width" value="100"/><label for="i_height">Height</label> <input type="number" id="i_height" value="100"/></div></div><div class="sub-group" class="experimental"><div class="element g-rad"><label for="i_rad">Border Radius</label> <input type="range" id="i_rad" value="0" min="0" max="50"/><p class="value rad">0%</p></div></div><h3>Background</h3><div class="element g-col"><label for="i_bgr">Red</label> <input type="range" id="i_bgr" value="48" min="0" max="255"/><p class="value red bg">48 / 255</p><label for="i_bgg">Green</label> <input type="range" id="i_bgg" value="48" min="0" max="255"/><p class="value green bg">48 / 255</p><label for="i_bgb">Blue</label> <input type="range" id="i_bgb" value="48" min="0" max="255"/><p class="value blue bg">48 / 255</p><label for="i_bga">Opacity</label> <input type="range" id="i_bga" value="100" min="0" max="100"/><p class="value alpha bg">100%</p></div></div><div class="group" id="second_group"><h3>Text</h3><div clas="sub-group"><div class="element g-copy"><label for="i_text">Copy</label> <input type="text" id="i_text" value="wxh"/></div></div><div clas="sub-group"><div class="element g-sel"><label for="i_fontsize">Font Size</label> <select id="i_fontsize"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option><option value="5">5</option></select></div></div><div clas="sub-group"><h3>Font Color</h3><div class="element g-col"><label for="i_cr">Red</label> <input type="range" id="i_cr" value="0" min="0" max="255"/><p class="value red col">0 / 255</p><label for="i_cg">Green</label> <input type="range" id="i_cg" value="232" min="0" max="255"/><p class="value green col">232 / 255</p><label for="i_cb">Blue</label> <input type="range" id="i_cb" value="0" min="0" max="255"/><p class="value blue col">0 / 255</p><label for="i_ca">Opacity</label> <input type="range" id="i_ca" value="100" min="0" max="100"/><p class="value alpha col">100%</p></div></div></div><div class="result"><textarea id="link"></textarea><img id="image" /></div></div><div id="page_manual" class="page"><table cellspacing="0" cellpadding="0"><tr><th class="t-key">key</th><th class="t-value">value</th></tr>';
 
 		foreach($this->manual as $k => $v){ $html .= '<tr><td class="t-key">'.$k.'</td><td>'.$v.'</td></tr>'; }
 
