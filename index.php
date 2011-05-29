@@ -6,8 +6,8 @@
  * 
  * Script: index.php
  * Description: creates a sized and colored image based on GET params
- * Version 1.0.2
- * Last Revision: 05/29/2011 01:38:34
+ * Version 1.0.3
+ * Last Revision: 05/29/2011 05:08:34
  * 
  */
 
@@ -62,7 +62,7 @@ class Img {
 			'background'		=> $this->colors['de'],
 			'color'			=> $this->colors['g'],
 			'radius'			=> 0,
-			'cache'			=> 1,
+			'cache'			=> ($_SERVER['SERVER_NAME'] === 'localhost') ? 0 : 1,
 			'debug'			=> 0
 		);
 
@@ -171,10 +171,10 @@ class Img {
 		$image = imagecreatetruecolor($opts['dimensions']['w'], $opts['dimensions']['h']);
 		if($this->isValid($image)){
 			imagealphablending($image,  true);
-			$alpha = imagecolorallocatealpha($image, 0, 0, 0, 127);
-			imagefill($image, 0, 0, $alpha);
+			$alphacolor = imagecolorallocatealpha($image, 0, 0, 0, 127);
+			imagefill($image, 0, 0, $alphacolor);
 			$bg = $opts['background'];
-			if(!$opts['radius'] && $bg['a'] < 100){
+			if($bg['a'] < 100){
 				$alpha = intval(round(((100 - $bg['a']) * 127) / 100));
 				$background = imagecolorallocatealpha($image, $bg['r'], $bg['g'], $bg['b'], $alpha);
 			}else{
@@ -187,14 +187,28 @@ class Img {
 					$rad =  intval(ceil($opts['dimensions']['w'] * ($opts['radius'] / 100)));
 				}
 				$circ = $rad * 2;
+				$circrad = $circ + $rad;
 				$farx = $opts['dimensions']['w'] - $rad;
 				$fary = $opts['dimensions']['h'] - $rad;
-				imagefilledrectangle($image, $rad, 0, $farx, $opts['dimensions']['h'], $background); 
-				imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary, $background); 
-				imagefilledellipse($image, $rad, $rad, $circ, $circ, $background); #nw corner
-				imagefilledellipse($image, $farx, $rad, $circ, $circ, $background); #ne corner
-				imagefilledellipse($image, $farx, $fary, $circ, $circ, $background); #sw corner
-				imagefilledellipse($image, $rad, $fary, $circ, $circ, $background); #se corner
+
+				$image2 = imagecreatetruecolor($circ * 2, $rad);
+				imagealphablending($image2,  true);
+				imagefill($image2, 0, 0, $alphacolor);
+
+				imagefilledellipse($image2, $rad, $rad, $circ, $circ, $background);
+				imagefilledellipse($image2, $circrad, 0, $circ, $circ, $background);
+				
+				imagecopyresampled($image, $image2, 0, 0, 0, 0, $rad, $rad, $rad, $rad); 				#nw
+				imagecopyresampled($image, $image2, $farx, 0, $rad, 0, $rad, $rad, $rad, $rad); 			#ne
+				imagecopyresampled($image, $image2, $farx, $fary, $circrad, 0, $rad, $rad, $rad, $rad); 	#se
+				imagecopyresampled($image, $image2, 0, $fary, $circ, 0, $rad, $rad, $rad, $rad); 		#sw
+				
+				imagefilledrectangle($image, $rad, 0, $farx-1, $rad-1, $background);
+				imagefilledrectangle($image, $rad, $fary, $farx-1, $opts['dimensions']['h'], $background); 
+				imagefilledrectangle($image, 0, $rad, $opts['dimensions']['w'], $fary-1, $background); 
+
+				imagedestroy($image2);
+				
 			}else{
 				imagefill($image, 0, 0, $background);
 			}
