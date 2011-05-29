@@ -41,7 +41,7 @@ class Img {
 		'd'     => 'dimensions', 
 		'bg'    => 'background', 
 		'c'     => 'color', 
-		'br'		=> 'radius',
+		'br'	    => 'radius',
 		'cache' => 'cache', 
 		'debug' => 'debug' 
 	);
@@ -56,14 +56,14 @@ class Img {
 		if(!extension_loaded('gd')){ die('GD Library is required for this script'); }
 		
 		$this->defaults = array(
-			'text'			=> 'wxh',
-			'font'			=> 4,
-			'dimensions'		=> array('w' => 100, 'h' => 100),
-			'background'		=> $this->colors['de'],
-			'color'			=> $this->colors['g'],
-			'radius'			=> 0,
-			'cache'			=> 1,
-			'debug'			=> 0
+			'text'          => 'wxh',
+			'font'          => 4,
+			'dimensions'	    => array('w' => 100, 'h' => 100),
+			'background'	    => $this->colors['de'],
+			'color'         => $this->colors['g'],
+			'radius'	        => 0,
+			'cache'         => 1,
+			'debug'         => 0
 		);
 
 		$options = $this->validateInput($input);
@@ -317,7 +317,7 @@ class Img {
 		'd'     => 'dimensions: (<em>width</em><strong>x</strong><em>height</em> | <em>square</em>)<br/>default value: 100x100 | 100',
 		'bg'    => 'background: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 63,63,63,100 | de',
 		'c'     => 'font color: r [0-255], g [0-255], b [0-255], a[0-100] | color code <em>see Colors</em><br/>default value: 0,223,0,100 | g',
-		'br'     => 'border-radius: 0-50 % of shortest side',
+		'br'    => 'border-radius: 0-50 % of shortest side',
 		'cache' => 'enable caching (1 | 0)<br/>default value: 1',
 		'debug' => 'enable debugging (1 | 0) turns content type to text/html to see errors<br/>default value: 0' 
 	);
@@ -361,7 +361,7 @@ function Builder(){
 			t.params.c.a  = t.validate("alpha",$("#i_ca").val());
 			t.params.t    = t.validate("text",$("#i_text").val());
 			t.params.f    = t.validate("font",$("#i_fontsize").val());
-			t.params.br    = t.validate("rad",$("#i_rad").val());
+			t.params.br   = t.validate("rad",$("#i_rad").val());
 			$("p.bg.red").html(t.params.bg.r+" / 255");
 			$("p.bg.green").html(t.params.bg.g+" / 255");
 			$("p.bg.blue").html(t.params.bg.b+" / 255");
