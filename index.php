@@ -1,5 +1,16 @@
 <?php
-
+/*
+ * Developer : Greg Russell (grgrssll@gmail.com)
+ * Date : 05/28/2011
+ * All code (c)2011 grgrssll.com all rights reserved
+ * 
+ * Script: index.php
+ * Description: creates a sized and colored image based on GET params
+ * Version 1.0
+ * Last Revision: 05/28/2011 23:58:34
+ * 
+ */
+ 
 date_default_timezone_set('America/Los_Angeles');
 
 class Img {
