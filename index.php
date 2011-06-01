@@ -94,8 +94,12 @@ class Img {
 		
 		if($this->options['cache'] && extension_loaded('memcache')){
 			$this->memcache = new Memcache();
-			$this->memcache->connect('127.0.0.1', 11211);
-			$this->hashify();
+			$connect = @$this->memcache->connect('127.0.0.1', 11211);
+			if($connect){
+				$this->hashify();	
+			}else{
+				$this->memcache = false;
+			}
 		}else{
 			$this->memcache = false;
 		}
@@ -201,7 +205,7 @@ class Img {
 				imagecopyresampled($image, $image2, 0, 0, 0, 0, $rad, $rad, $rad, $rad); 				#nw
 				imagecopyresampled($image, $image2, $farx, 0, $rad, 0, $rad, $rad, $rad, $rad); 			#ne
 				imagecopyresampled($image, $image2, $farx, $fary, $circrad, 0, $rad, $rad, $rad, $rad); 	#se
-				imagecopyresampled($image, $image2, 0, $fary, $circ, 0, $rad, $rad, $rad, $rad); 		#sw
+				imagecopyresampled($image, $image2, 0, $fary, $circ+1, 0, $rad, $rad, $rad, $rad); 		#sw
 
 				if($opts['radius'] == 50){
 					if($opts['dimensions']['w'] < $opts['dimensions']['h']){
